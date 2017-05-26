@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import java.util.List;
 
-public class SensorActivity extends AppCompatActivity {
+public class SensorActivity extends AppCompatActivity  implements ShakeListener.OnShakeEventListener {
 
     SensorManager sensorManager;
     Sensor sensor;
@@ -28,21 +28,27 @@ public class SensorActivity extends AppCompatActivity {
 
         Log.i("TIME_IN_MILIS", Long.toString(System.currentTimeMillis()));
 
-        shakeListener = new ShakeListener(this);
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
-        sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
-        sensorManager.registerListener(shakeListener, sensor, sensorManager.SENSOR_DELAY_GAME);
+        shakeListener = new ShakeListener(sensorManager);
+        shakeListener.start();
+        //final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        //sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+        //sensorManager.registerListener(shakeListener, sensor, sensorManager.SENSOR_DELAY_GAME);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-//        shakeListener.resume();
+        shakeListener.start();
     }
     @Override
     public void onPause() {
         super.onPause();
-//        shakeListener.pause();
+        shakeListener.stop();
+    }
+
+    @Override
+    public void onShakeEvent() {
+        System.out.println("THE DEVICE IS SHAKING!!!");
     }
 }

@@ -21,9 +21,8 @@ public class ShakeListener implements SensorEventListener {
     float countedAccel;
     final float ACCEL_TRESHOLD = 10;
 
-    public ShakeListener(Context context) {
-        this.context = context;
-        SensorManager sensorManager = (SensorManager) context.getSystemService(Context.SENSOR_SERVICE);
+    public ShakeListener(SensorManager sensorManager) {
+        this.sensorManager = sensorManager;
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
 
@@ -64,5 +63,18 @@ public class ShakeListener implements SensorEventListener {
     @Override
     public void onAccuracyChanged(Sensor sensor, int accuracy) {
 
+    }
+
+    public void start() {
+        sensorManager.registerListener(this, sensor, SensorManager.SENSOR_DELAY_GAME);
+    }
+
+    public void stop() {
+        sensorManager.unregisterListener(this);
+    }
+
+    public interface OnShakeEventListener {
+
+        public void onShakeEvent();
     }
 }
