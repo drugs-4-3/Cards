@@ -1,3 +1,10 @@
+/*
+
+        TODO: ADD SHAKE COUNTER AND PERFORM LISTENER ACTION ONLY AFTER FIXED NUMBER OF SHAKES
+ */
+
+
+
 
 package learning.ifeel3.cards;
 
@@ -13,6 +20,7 @@ public class ShakeListener implements SensorEventListener {
     private Context context;
     private SensorManager sensorManager;
     private Sensor sensor;
+    private OnShakeEventListener listener;
 
     float[] gravity = new float[3];
     float[] linear_acceleration = new float[3];
@@ -21,8 +29,9 @@ public class ShakeListener implements SensorEventListener {
     float countedAccel;
     final float ACCEL_TRESHOLD = 10;
 
-    public ShakeListener(SensorManager sensorManager) {
+    public ShakeListener(SensorManager sensorManager, OnShakeEventListener listener) {
         this.sensorManager = sensorManager;
+        this.listener = listener;
         sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
 
@@ -56,7 +65,7 @@ public class ShakeListener implements SensorEventListener {
         lastAccel = currAccel;
 
         if (countedAccel > ACCEL_TRESHOLD) {
-            System.out.println("DEVICE IS ACCELERATING!");
+            listener.onShakeEvent();
         }
     }
 

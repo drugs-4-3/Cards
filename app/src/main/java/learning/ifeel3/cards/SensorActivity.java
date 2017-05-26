@@ -25,12 +25,10 @@ public class SensorActivity extends AppCompatActivity  implements ShakeListener.
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sensor);
+//
+//        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+//        shakeListener = new ShakeListener(sensorManager);
 
-        Log.i("TIME_IN_MILIS", Long.toString(System.currentTimeMillis()));
-
-        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
-        shakeListener = new ShakeListener(sensorManager);
-        shakeListener.start();
         //final Vibrator vibe = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         //sensor = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         //sensorManager.registerListener(shakeListener, sensor, sensorManager.SENSOR_DELAY_GAME);
@@ -39,12 +37,12 @@ public class SensorActivity extends AppCompatActivity  implements ShakeListener.
     @Override
     public void onResume() {
         super.onResume();
-        shakeListener.start();
+        //shakeListener.start();
     }
     @Override
     public void onPause() {
         super.onPause();
-        shakeListener.stop();
+        //shakeListener.stop();
     }
 
     @Override

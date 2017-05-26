@@ -1,8 +1,11 @@
 package learning.ifeel3.cards;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
+import android.hardware.Sensor;
+import android.hardware.SensorManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,13 +18,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements  ShakeListener.OnShakeEventListener {
 
+    SensorManager sensorManager;
+    ShakeListener shakeListener;
 
     ArrayList<ImageView> cardsList = new ArrayList<>(5);
     TypedArray cardImages;
     final Random random = new Random();
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +39,21 @@ public class MainActivity extends AppCompatActivity {
         cardsList.add((ImageView) findViewById(R.id.card5));
 
         cardImages = getResources().obtainTypedArray(R.array.cards_array);
+
+        sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
+        shakeListener = new ShakeListener(sensorManager, this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        shakeListener.start();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        shakeListener.stop();
     }
 
     private void shuffle() {
@@ -84,5 +103,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void openSensorActivity(View view) {
         startActivity(new Intent(this, SensorActivity.class));
+    }
+
+    @Override
+    public void onShakeEvent() {
+        shuffle();
+        System.out.println("SHAKING !!!!!!!!!!!!!!!!!");
     }
 }
