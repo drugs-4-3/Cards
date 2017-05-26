@@ -1,5 +1,6 @@
 package learning.ifeel3.cards;
 
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.drawable.Drawable;
 import android.support.v7.app.AppCompatActivity;
@@ -79,5 +80,9 @@ public class MainActivity extends AppCompatActivity {
             arr[j] = temp;
         }
         return arr;
+    }
+
+    public void openSensorActivity(View view) {
+        startActivity(new Intent(this, SensorActivity.class));
     }
 }

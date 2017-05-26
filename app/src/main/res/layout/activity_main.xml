@@ -75,4 +75,16 @@
         android:text="Shuffle!"
         android:onClick="shuffleCards"/>
 
+    <Button
+        android:id="@+id/sensorActivityButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="0dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginRight="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_above="@id/shuffleButton"
+        android:text="Next Activity"
+        android:onClick="openSensorActivity"/>
+
 </RelativeLayout>
